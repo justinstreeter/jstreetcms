@@ -1,3 +1,9 @@
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%-- 
     Document   : header
     Created on : Dec 8, 2015, 6:43:25 PM
@@ -16,7 +22,7 @@
 
     <title>jstreet</title>
 
-    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+   
     <link href="style/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
@@ -36,7 +42,15 @@
     <![endif]-->
 
 </head>
+ <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+     url="jdbc:mysql://localhost/jstreetcms"
+     user="root"  password=""/>
 
+<sql:query dataSource="${snapshot}" var="result">
+SELECT * FROM content;
+</sql:query>
+<!-- Header -->
+<c:forEach var="row" items="${result.rows}">
 <body id="page-top" class="index">
 
     <!-- Navigation -->
@@ -50,7 +64,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#page-top">JStreet-Dev</a>
+                <a class="navbar-brand" href="#page-top">${row.brand}</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,13 +74,16 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#portfolio">Portfolio</a>
+                        <a href="#portfolio">${row.navlink1}</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">About</a>
+                        <a href="#about">${row.navlink2}</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">Contact</a>
+                        <a href="#contact">${row.navlink3}</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="login.jsp">Login</a>
                     </li>
                 </ul>
             </div>
@@ -74,5 +91,6 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+</c:forEach>
 
     

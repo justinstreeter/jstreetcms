@@ -5,12 +5,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%-- 
-    Document   : header
-    Created on : Dec 8, 2015, 6:43:25 PM
+    Document   : edit
+    Created on : Dec 8, 2015, 9:48:11 PM
     Author     : Justin
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
+  <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
 
@@ -42,7 +44,8 @@
     <![endif]-->
 
 </head>
- <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
      url="jdbc:mysql://localhost/jstreetcms"
      user="root"  password=""/>
 
@@ -51,8 +54,9 @@ SELECT * FROM content;
 </sql:query>
 <!-- Header -->
 <c:forEach var="row" items="${result.rows}">
-<body id="page-top" class="index">
 
+<form action="editindex.jsp" method="post">
+   
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -64,7 +68,7 @@ SELECT * FROM content;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#page-top">${row.brand}</a>
+                <a class="navbar-brand" href="#page-top"><input type="text" name="brand" style="color:black;" value="${row.brand}"/></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -74,13 +78,13 @@ SELECT * FROM content;
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#portfolio">${row.navlink1}</a>
+                        <a href="#portfolio"><input type="text" name="navlink1" style="color:black;" value="${row.navlink1}"/></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">${row.navlink2}</a>
+                        <a href="#about"><input type="text" name="navlink2" style="color:black;" value="${row.navlink2}"/></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">${row.navlink3}</a>
+                        <a href="#contact"><input type="text" name="navlink3" style="color:black;" value="${row.navlink3}"/></a>
                     </li>
                     <li class="page-scroll">
                         <a href="login.jsp">Login</a>
@@ -91,27 +95,28 @@ SELECT * FROM content;
         </div>
         <!-- /.container-fluid -->
     </nav>
-<!-- Header -->
+
     <header>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <img class="img-responsive" src="img/profile.png" alt="">
                     <div class="intro-text">
-                        <span class="name">${row.name}</span>
+                        <span class="name"><input type="text" name="name" style="color:black;" value="${row.name}"/></span>
                         <hr class="star-light">
-                        <span class="skills">${row.skill1}${row.skill2}${row.skill3}</span>
+                        <span class="skills"><input type="text" name="skill1" style="color:black;" value="${row.skill1}"><input type="text" name="skill2" style="color:black;" value="${row.skill2}"><input type="text" name="skill3" style="color:black;" value="${row.skill3}"></span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
+                    
      <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>${row.portfolio}</h2>
+                    <h2><input type="text" name="portfolio" style="color:black;" value="${row.portfolio}"/></h2>
                     <hr class="star-primary">
                 </div>
             </div>
@@ -185,20 +190,20 @@ SELECT * FROM content;
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>${row.about}</h2>
+                    <h2><input type="text" name="about" style="color:black;" value="${row.about}"/></h2>
                     <hr class="star-light">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                    <p>${row.aboutinfo}</p>
+                    <p><textarea  name="aboutinfo" style="color:black;" placeholder="${row.aboutinfo}"></textarea></p>
                 </div>
                 <div class="col-lg-4">
-                    <p>${row.aboutinfo2}</p>
+                    <p><textarea  name="aboutinfo2" style="color:black;" placeholder="${row.aboutinfo2}"></textarea></p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> ${row.about_button}
+                        <i class="fa fa-download"></i> <input type="text" name="about_button" style="color:black;" value="${row.about_button}"/>
                     </a>
                 </div>
             </div>
@@ -206,59 +211,7 @@ SELECT * FROM content;
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Contact Me</h2>
-                    <hr class="star-primary">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-                    <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                    <form name="sentMessage" id="contactForm" novalidate>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Name</label>
-                                <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Email Address</label>
-                                <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Phone Number</label>
-                                <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter your phone number.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Message</label>
-                                <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <br>
-                        <div id="success"></div>
-                        <div class="row">
-                            <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-success btn-lg">Send</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+   
       <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll visible-xs visible-sm">
         <a class="btn btn-primary" href="#page-top">
@@ -489,16 +442,18 @@ SELECT * FROM content;
             </div>
         </div>
     </div>
-<footer class="text-center">
+
+
+ <footer class="text-center">
         <div class="footer-above">
             <div class="container">
                 <div class="row">
                     <div class="footer-col col-md-4">
-                        <h3>${row.footsec1}</h3>
-                        <p>${row.footdec1}</p>
+                        <h3><input type="text" name="footsec1" style="color:black;" value="${row.footsec1}"/></h3>
+                        <p><input type="text" name="footdec1" style="color:black;" value="${row.footdec1}"/></p>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>${row.footsec2}</h3>
+                        <h3><input type="text" name="footsec2" style="color:black;" value="${row.footsec2}"/></h3>
                         <ul class="list-inline">
                             <li>
                                 <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
@@ -516,8 +471,8 @@ SELECT * FROM content;
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>${row.footsec3}</h3>
-                        <p>${row.footdec3}</a>.</p>
+                        <h3><input type="text" name="footsec3" style="color:black;" value="${row.footsec3}"/></h3>
+                        <p><input type="text"  name="footdec3" style="color:black;" value="${row.footdec3}"/></p>
                     </div>
                 </div>
             </div>
@@ -526,12 +481,14 @@ SELECT * FROM content;
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy;${row.copy}
+                        Copyright &copy;<input type="text" name="copy" style="color:black;" value="${row.copy}"/> 
+                        <input type="submit" id="submit" class="btn btn-success btn-lg" />
                     </div>
                 </div>
             </div>
         </div>
     </footer>
+ </form>
 
 <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -550,7 +507,7 @@ SELECT * FROM content;
 
     <!-- Custom Theme JavaScript -->
     <script src="js/freelancer.js"></script>
-
+    
 </body>
 </c:forEach>
 </html>
